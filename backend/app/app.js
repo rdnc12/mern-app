@@ -1,13 +1,13 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
-const init = () => {
+const init = data => {
   const app = express();
 
-  app.use(express.json());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-  const usersRouter = require("../app/routers/users");
-
-  app.use("/users", usersRouter);
+  require("../app/routers").usersRouter(app, data);
 
   return Promise.resolve(app);
 };
